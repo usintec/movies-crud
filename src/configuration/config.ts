@@ -66,3 +66,4 @@ class Config{
         return this._secret;
     }
 }
+export { Config };
