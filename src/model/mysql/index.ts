@@ -49,8 +49,8 @@ class Index {
 
         this._DB.roleModel.belongsToMany(this._DB.userModel, {
             through: 'user_roles',
-            foreignKey: 'roleId',
-            otherKey: 'userId'
+            foreignKey: 'userId',
+            otherKey: 'roleId'
         });
 
         this._DB.userModel.belongsToMany(this._DB.movieModel, {

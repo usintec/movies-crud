@@ -19,10 +19,11 @@ class UserController {
                 email: req.body.email.toString(),
                 password: bcrypt.hashSync(req.body.password)
             });
-            let role = await DB.roleModel.findAll({where: {name: 'user' } }); 
+            
             const token = jwt.sign({id: user.id}, configuration.secret as string,{
                 expiresIn: 86400
             });
+            let role = await DB.roleModel.findAll({where: {name: 'user' } }); 
             await user.setRoles(role);
             res.status(200).send({
                 user: user,
