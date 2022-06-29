@@ -1,29 +1,46 @@
 # MODEL
 
-## USER
-    - email
-    - password
+## User TABLE NAME = users
+    +-----------+--------------+------+-----+---------+----------------+
+    | Field     | Type         | Null | Key | Default | Extra          |
+    +-----------+--------------+------+-----+---------+----------------+
+    | id        | int          | NO   | PRI | NULL    | auto_increment |
+    | email     | varchar(255) | NO   |     | NULL    |                |
+    | password  | varchar(255) | NO   |     | NULL    |                |
+    | createdAt | datetime     | NO   |     | NULL    |                |
+    | updatedAt | datetime     | NO   |     | NULL    |                |
+    +-----------+--------------+------+-----+---------+----------------+
+    5 rows in set (0.00 sec)
 
-## ROLE
-    - name
+## Role TABLE NAME = roles
+    +-----------+--------------+------+-----+---------+----------------+
+    | Field     | Type         | Null | Key | Default | Extra          |
+    +-----------+--------------+------+-----+---------+----------------+
+    | id        | int          | NO   | PRI | NULL    | auto_increment |
+    | name      | varchar(255) | NO   | UNI | NULL    |                |
+    | createdAt | datetime     | NO   |     | NULL    |                |
+    | updatedAt | datetime     | NO   |     | NULL    |                |
+    +-----------+--------------+------+-----+---------+----------------+
+    4 rows in set (0.01 sec)
 
-## Movie
-    - id;
-    - synopsis;
-    - title;
-    - yearOfRelease;
-    - language;
-    - movieType;
-    - featuredImage;
+## UserRoles TABLE NAME = user_roles;
+    +-----------+----------+------+-----+---------+-------+
+    | Field     | Type     | Null | Key | Default | Extra |
+    +-----------+----------+------+-----+---------+-------+
+    | createdAt | datetime | NO   |     | NULL    |       |
+    | updatedAt | datetime | NO   |     | NULL    |       |
+    | roleId    | int      | NO   | PRI | NULL    |       |
+    | userId    | int      | NO   | PRI | NULL    |       |
+    +-----------+----------+------+-----+---------+-------+
+    4 rows in set (0.01 sec)
 
-    
-
-## MovieyType
+## Movie: TABLE NAME = movies
     +---------------+--------------+------+-----+---------+----------------+
     | Field         | Type         | Null | Key | Default | Extra          |
     +---------------+--------------+------+-----+---------+----------------+
     | id            | int          | NO   | PRI | NULL    | auto_increment |
     | synopsis      | text         | YES  |     | NULL    |                |
+    | movieStamp    | varchar(255) | NO   |     | NULL    |                |
     | title         | varchar(255) | NO   |     | NULL    |                |
     | yearOfRelease | varchar(255) | YES  |     | NULL    |                |
     | language      | varchar(255) | YES  |     | NULL    |                |
@@ -32,8 +49,15 @@
     | createdAt     | datetime     | NO   |     | NULL    |                |
     | updatedAt     | datetime     | NO   |     | NULL    |                |
     +---------------+--------------+------+-----+---------+----------------+
-    9 rows in set (0.00 sec)
+    10 rows in set (0.00 sec)
 
-## UserMovie
-    - userId
-    - MovieId
+## UserMovies TABLE NAME = user_movies
+    +-----------+----------+------+-----+---------+-------+
+    | Field     | Type     | Null | Key | Default | Extra |
+    +-----------+----------+------+-----+---------+-------+
+    | createdAt | datetime | NO   |     | NULL    |       |
+    | updatedAt | datetime | NO   |     | NULL    |       |
+    | movieId   | int      | NO   | PRI | NULL    |       |
+    | userId    | int      | NO   | PRI | NULL    |       |
+    +-----------+----------+------+-----+---------+-------+
+    4 rows in set (0.00 sec)
