@@ -4,11 +4,9 @@ import { UserModel } from "./user";
 import { RoleModel } from "./role";
 import { MovieMode } from "./movie";
 import {Sequelize} from 'sequelize';
+// get appropriate configuratios e.g Dev, Staging or Prod
 const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
-console.log(configuration);
-console.log(configuration.dbName as string);
-console.log(configuration.dbUser as string);
-console.log(configuration.dbPassword as string);
+// create sequelize object
 const sequelize = new Sequelize(
     configuration.dbName as string,
     configuration.dbUser as string,
@@ -21,7 +19,11 @@ const sequelize = new Sequelize(
             idle: 2000,
         }
     });
-
+/**
+ * Create Index: Facade Pattern where DB 
+ * becomes a bridge to other models and 
+ * sequelize object.
+ */
 class Index {
     private _DB: DbInterface = {
         sequelize: '',
