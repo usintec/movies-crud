@@ -10,15 +10,16 @@ class EnviromentSetup {
     public get enviroment(){
         switch(this._envName){
             case 'DEV':
-                return new DevelopmentServer();
+                return new DevelopmentServer().Config;
                 break;
             case 'STAGING':
-                return new StagingServer();
+                return new StagingServer().Config;
                 break;
             case 'PRODUCTION':
-                return new ProductionServer();
+                return new ProductionServer().Config;
                 break;
         }
         return null;
     }
 }
+export { EnviromentSetup }

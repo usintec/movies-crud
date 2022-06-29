@@ -10,5 +10,9 @@ abstract class BaseConfig {
     constructor(config: Config){
         this._config = config;
     }
+    // return configurations
+    public get Config() {
+        return this._config;
+    }
 }
 export { BaseConfig }
