@@ -15,7 +15,8 @@ class DevelopmentServer extends BaseConfig{
             Number.parseInt(process.env.DEV_DB_PORT),
             process.env.DEV_SECRET,
             Number.parseInt(process.env.DEV_TOTAL_PAGE_BUFFER),
-            process.env.DEV_MOVIES_DB_URL
+            process.env.DEV_MOVIES_DB_URL,
+            Number.parseInt(process.env.DEV_MOVIES_PER_PAGE)
         ))
     }
 }

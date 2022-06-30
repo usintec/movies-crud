@@ -15,7 +15,7 @@ class EnviromentSetup {
             case 'STAGING':
                 return new StagingServer().Config;
                 break;
-            case 'PRODUCTION':
+            case 'PROD':
                 return new ProductionServer().Config;
                 break;
         }

@@ -4,6 +4,6 @@ const MoviesRouter = express.Router();
 /**
  * Add routes to MoviesRouter
  */
-MoviesRouter.get('/', moviesController.fetchMovies);
+MoviesRouter.get('/:page', moviesController.fetchMovies);
 
 export { MoviesRouter };

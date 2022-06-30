@@ -12,6 +12,7 @@ class Config{
     private _secret: String;
     private _totalPageBuffer: Number;
     private _moviesDbURL: String;
+    private _moviesPerPage: Number;
     /**
      * 
      * @param hostAddr server host address
@@ -24,10 +25,11 @@ class Config{
      * @param secret authentication secret
      * @param totalPageBuffer max page(buffer) to hold movies from thirdParty movies db
      * @param moviesDbURL third party integration (movies database url)
+     * @param moviesPerPage number of movies on a single page
      */
     constructor(hostAddr: String, portNo: Number, dbName: String, dbHostAddr: String, 
         dbUser: String, dbPassword: String, dbPortNo: Number, secret: String, 
-        totalPageBuffer: Number, moviesDbURL: String){
+        totalPageBuffer: Number, moviesDbURL: String, moviesPerPage: Number){
             this._hostAddr = hostAddr;
             this._portNo = portNo;
             this._dbName = dbName;
@@ -37,47 +39,52 @@ class Config{
             this._dbPortNo = dbPortNo;
             this._secret = secret;
             this._totalPageBuffer = totalPageBuffer;
-            this._moviesDbURL = moviesDbURL
+            this._moviesDbURL = moviesDbURL;
+            this._moviesPerPage = moviesPerPage;
     }
     // return host address
-    public get hostAddr() {
+    public get hostAddr(): String{
         return this._hostAddr;
     }
     // return port number
-    public get portNo(){
+    public get portNo(): Number{
         return this._portNo;
     }
     // return database name 
-    public get dbName(){
+    public get dbName(): String{
         return this._dbName;
     }
     // return database host address
-    public get dbHostAddr(){
+    public get dbHostAddr(): String{
         return this._dbHostAddr;
     }
     // return database user
-    public get dbUser(){
+    public get dbUser(): String{
         return this._dbUser;
     }
     // return database password
-    public get dbPassword(){
+    public get dbPassword(): String{
         return this._dbPassword;
     }
     // return database port number
-    public get dbPortNo(){
+    public get dbPortNo(): Number{
         return this._dbPortNo;
     }
     // return authentication secret
-    public get secret(){
+    public get secret(): String{
         return this._secret;
     }
     // return total page buffer 
-    public get totalPageBuffer(){
+    public get totalPageBuffer(): Number{
         return this._totalPageBuffer;
     }
     // return movies database url
-    public get moviesDatabaseURL(){
+    public get moviesDatabaseURL(): String{
         return this._moviesDbURL;
+    }
+    //return movies per page
+    public get moviesPerPage(): Number{
+        return this._moviesPerPage;
     }
 }
 export { Config };

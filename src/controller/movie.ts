@@ -1,13 +1,12 @@
+import { EnviromentSetup } from "../configuration/env";
 import { movieService } from "../service/movieService";
-
+const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 class MoviesController {
     async fetchMovies(req, res){
         try{
-            let data = await movieService.fetchMovies();
-            console.log('done sucessfully');
-            // console.log(data['data']);
+            let data = await movieService.fetchMovies(req.params.page);
             res.status(200).send({
-                data: data['data'],
+                data: data,
                 success: true,
                 message: 'fetched movies'
             });
