@@ -11,6 +11,7 @@ class Config{
     private _dbPortNo: Number;
     private _secret: String;
     private _totalPageBuffer: Number;
+    private _moviesDbURL: String;
     /**
      * 
      * @param hostAddr server host address
@@ -22,10 +23,11 @@ class Config{
      * @param dbPortNo database port number
      * @param secret authentication secret
      * @param totalPageBuffer max page(buffer) to hold movies from thirdParty movies db
+     * @param moviesDbURL third party integration (movies database url)
      */
-    constructor(hostAddr: String, portNo: Number, dbName: String,
-        dbHostAddr: String, dbUser: String, dbPassword: String,
-        dbPortNo: Number, secret: String, totalPageBuffer: Number){
+    constructor(hostAddr: String, portNo: Number, dbName: String, dbHostAddr: String, 
+        dbUser: String, dbPassword: String, dbPortNo: Number, secret: String, 
+        totalPageBuffer: Number, moviesDbURL: String){
             this._hostAddr = hostAddr;
             this._portNo = portNo;
             this._dbName = dbName;
@@ -35,6 +37,7 @@ class Config{
             this._dbPortNo = dbPortNo;
             this._secret = secret;
             this._totalPageBuffer = totalPageBuffer;
+            this._moviesDbURL = moviesDbURL
     }
     // return host address
     public get hostAddr() {
@@ -71,6 +74,10 @@ class Config{
     // return total page buffer 
     public get totalPageBuffer(){
         return this._totalPageBuffer;
+    }
+    // return movies database url
+    public get moviesDatabaseURL(){
+        return this._moviesDbURL;
     }
 }
 export { Config };

@@ -14,7 +14,8 @@ class StagingServer extends BaseConfig{
             process.env.STAGING_DB_PASSWORD,
             Number.parseInt(process.env.STAGING_DB_PORT),
             process.env.STAGING_SECRET,
-            Number.parseInt(process.env.STAGING_TOTAL_PAGE_BUFFER)
+            Number.parseInt(process.env.STAGING_TOTAL_PAGE_BUFFER),
+            process.env.STAGING_MOVIES_DB_URL
         ))
     }
 }

@@ -4,6 +4,7 @@ import { EnviromentSetup } from './src/configuration/env';
 import { DB } from './src/model/mysql';
 import * as bodyParser from 'body-parser';
 import { UserRouter } from './src/router/user';
+import { MoviesRouter } from './src/router/movie';
 const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 const app: Application = express();
 const port = configuration.portNo;
@@ -17,8 +18,11 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Headers', 'Content-Type');
   next();
 })
+// Routes
 app.use('/api/user', UserRouter);
+app.use('/api/movies/', MoviesRouter);
 
+// Database syncronization
 DB.sequelize.sync({force: true})
 .then(() => {
   console.log('done creating db') 
@@ -37,10 +41,12 @@ DB.sequelize.sync({force: true})
 })
 .catch((err) => console.log(err) );
 
+// Default routes
 app.get('/',()=>{
   console.log('Our API is up and runnig');
 });
 
+// Start the server
 try{
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`)

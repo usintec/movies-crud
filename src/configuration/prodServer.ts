@@ -14,7 +14,8 @@ class ProductionServer extends BaseConfig{
             process.env.PROD_DB_PASSWORD,
             Number.parseInt(process.env.PROD_DB_PORT),
             process.env.PROD_SECRET,
-            Number.parseInt(process.env.PROD_TOTAL_PAGE_BUFFER)
+            Number.parseInt(process.env.PROD_TOTAL_PAGE_BUFFER),
+            process.env.PROD_MOVIES_DB_URL
         ))
     }
 }

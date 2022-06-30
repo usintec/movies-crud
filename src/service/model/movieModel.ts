@@ -1,3 +1,5 @@
+import { MovieType } from "./movieType";
+
 /**
  * Create MoviesModel
  */
@@ -63,3 +65,4 @@ class MoviesModel {
         return this._featureImage;
     }
 }
+export { MoviesModel }

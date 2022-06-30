@@ -44,7 +44,6 @@ class AuthenticationMiddleware {
                 message: 'Required Admin role', 
                 sucess: false});
         }catch(err){
-            console.log(err);
             res.status('403').send({
                 message: 'Admin not found', 
                 status: false});
@@ -64,7 +63,6 @@ class AuthenticationMiddleware {
                 message: 'Required User role', 
                 sucess: false});
         }catch(err){
-            console.log(err);
             res.status('403').send({
                 message: 'User not found', 
                 status: false});

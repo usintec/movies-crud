@@ -32,7 +32,6 @@ class UserController {
                 sucess: true
             });
         }catch(err){
-            console.log(err);
             res.status(403).send({
                 message: err.message, 
                 success: false});
@@ -62,7 +61,6 @@ class UserController {
                 status: true,
             });
         }catch(err){
-            console.log(err.message);
             res.status(403).send({
                 message: err.message, 
                 success: false});
