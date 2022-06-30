@@ -52,18 +52,8 @@ class Index {
             foreignKey: 'userId',
             otherKey: 'roleId'
         });
-
-        this._DB.userModel.belongsToMany(this._DB.movieModel, {
-            through: 'user_movies',
-            foreignKey: 'movieId',
-            otherKey: 'userId'
-        });
-
-        this._DB.movieModel.belongsToMany(this._DB.userModel, {
-            through: 'user_movies',
-            foreignKey: 'movieId',
-            otherKey: 'userId'
-        });
+        
+        this._DB.userModel.hasMany(this._DB.movieModel);
         
     }
     public get DB() {

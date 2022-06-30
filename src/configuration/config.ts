@@ -10,6 +10,7 @@ class Config{
     private _dbPassword: String;
     private _dbPortNo: Number;
     private _secret: String;
+    private _totalPageBuffer: Number;
     /**
      * 
      * @param hostAddr server host address
@@ -20,10 +21,11 @@ class Config{
      * @param dbPassword database password
      * @param dbPortNo database port number
      * @param secret authentication secret
+     * @param totalPageBuffer max page(buffer) to hold movies from thirdParty movies db
      */
     constructor(hostAddr: String, portNo: Number, dbName: String,
         dbHostAddr: String, dbUser: String, dbPassword: String,
-        dbPortNo: Number, secret: String){
+        dbPortNo: Number, secret: String, totalPageBuffer: Number){
             this._hostAddr = hostAddr;
             this._portNo = portNo;
             this._dbName = dbName;
@@ -32,6 +34,7 @@ class Config{
             this._dbPassword = dbPassword;
             this._dbPortNo = dbPortNo;
             this._secret = secret;
+            this._totalPageBuffer = totalPageBuffer;
     }
     // return host address
     public get hostAddr() {
@@ -64,6 +67,10 @@ class Config{
     // return authentication secret
     public get secret(){
         return this._secret;
+    }
+    // return total page buffer 
+    public get totalPageBuffer(){
+        return this._totalPageBuffer;
     }
 }
 export { Config };

@@ -13,7 +13,8 @@ class DevelopmentServer extends BaseConfig{
             process.env.DEV_DB_USER,
             process.env.DEV_DB_PASSWORD,
             Number.parseInt(process.env.DEV_DB_PORT),
-            process.env.DEV_SECRET
+            process.env.DEV_SECRET,
+            Number.parseInt(process.env.DEV_TOTAL_PAGE_BUFFER)
         ))
     }
 }

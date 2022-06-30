@@ -6,14 +6,15 @@ import { Config } from "./config";
 class ProductionServer extends BaseConfig{
     constructor(){
         super( new Config(
-            process.env.PRODUCTION_HOST,
-            Number.parseInt(process.env.PRODUCTION_PORT),
-            process.env.PRODUCTION_DB,
-            process.env.PRODUCTION_DB_HOST,
-            process.env.PRODUCTION_DB_USER,
-            process.env.PRODUCTION_DB_PASSWORD,
-            Number.parseInt(process.env.PRODUCTION_DB_PORT),
-            process.env.PRODUCTION_SECRET
+            process.env.PROD_HOST,
+            Number.parseInt(process.env.PROD_PORT),
+            process.env.PROD_DB,
+            process.env.PROD_DB_HOST,
+            process.env.PROD_DB_USER,
+            process.env.PROD_DB_PASSWORD,
+            Number.parseInt(process.env.PROD_DB_PORT),
+            process.env.PROD_SECRET,
+            Number.parseInt(process.env.PROD_TOTAL_PAGE_BUFFER)
         ))
     }
 }
