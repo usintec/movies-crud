@@ -1,6 +1,7 @@
 import express from 'express';
 import { moviesController } from '../controller/movie';
 import { authenticationMiddleware } from '../middleware/auth';
+import { movieValidationMiddleware } from '../middleware/movie';
 import upload from '../middleware/upload';
 
 const MoviesRouter = express.Router();
@@ -16,18 +17,21 @@ MoviesRouter.get('/favourite/:page/:limit?/:rank?/:order?', [
 
 MoviesRouter.get('/search/:keyword', [
     authenticationMiddleware.verifyToken, 
-    authenticationMiddleware.verifyUser],
+    authenticationMiddleware.verifyUser,
+    movieValidationMiddleware.keywordValidation],
     moviesController.search);
 
 MoviesRouter.post('/', [
     authenticationMiddleware.verifyToken, 
-    authenticationMiddleware.verifyUser],
+    authenticationMiddleware.verifyUser,
+    movieValidationMiddleware.moviesValidation],
     [upload.array('files')],
     moviesController.createMovie);
 
 MoviesRouter.put('/update', [
     authenticationMiddleware.verifyToken, 
-    authenticationMiddleware.verifyUser],
+    authenticationMiddleware.verifyUser,
+    movieValidationMiddleware.moviesValidation],
     [upload.array('files')],
     moviesController.updateMovie);
 
