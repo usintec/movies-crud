@@ -10,7 +10,7 @@ const sequelize_1 = require("sequelize");
 const configuration = new env_1.EnviromentSetup(process.env.ENVIROMENT).enviroment;
 // create sequelize object
 const sequelize = new sequelize_1.Sequelize(configuration.dbName, configuration.dbUser, configuration.dbPassword, {
-    host: configuration.hostAddr,
+    host: configuration.dbHostAddr,
     dialect: 'mysql',
     pool: {
         max: 10000,

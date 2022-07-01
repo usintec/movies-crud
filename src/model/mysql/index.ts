@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
     configuration.dbName as string,
     configuration.dbUser as string,
     configuration.dbPassword as string,{
-        host: configuration.hostAddr as string,
+        host: configuration.dbHostAddr as string,
         dialect: 'mysql',
         pool: {
             max: 10000,
