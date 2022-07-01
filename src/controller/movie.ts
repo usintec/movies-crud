@@ -140,9 +140,7 @@ class MoviesController {
                 where: {
                     [Op.or]: [
                         { title: {[Op.eq]: req.params.keyword} },              
-                        { yearOfRelease: {[Op.eq]: req.params.keyword} },              
-                        { language: {[Op.eq]: req.params.keyword} },              
-                        { movieType: {[Op.eq]: req.params.keyword} },              
+                        { language: {[Op.eq]: req.params.keyword} },           
                     ]
                 }
             });

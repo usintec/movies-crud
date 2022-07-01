@@ -14,10 +14,10 @@ MoviesRouter.get('/favourite/:page/:limit?/:rank?/:order?', [
     authenticationMiddleware.verifyUser], 
     moviesController.readFavouriteMovie);
 
-MoviesRouter.get('/search/:param', [
+MoviesRouter.get('/search/:keyword', [
     authenticationMiddleware.verifyToken, 
     authenticationMiddleware.verifyUser],
-    moviesController.fetchMovies);
+    moviesController.search);
 
 MoviesRouter.post('/', [
     authenticationMiddleware.verifyToken, 
