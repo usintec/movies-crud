@@ -20,8 +20,15 @@ class UserModel {
                 type: Sequelize.STRING,
                 min: 6,
                 allowNull: false,
+            },
+        },
+        {
+            scopes: {
+              withoutPassword: {
+                attributes: {exclude: ['password']}
+              }
             }
-        });
+          });
         return this._user;
     }
 }

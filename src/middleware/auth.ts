@@ -16,8 +16,9 @@ class AuthenticationMiddleware {
      * @returns 
      */
     verifyToken(req, res, next){
-        let token = req.headers['Authorization'];
-        if(!token) return res.statu('403').send({
+        // console.log(req);
+        let token = req.headers['authorization'];
+        if(!token) return res.status('403').send({
             message: 'No token is provided',
             sucess: false
         });
@@ -57,14 +58,17 @@ class AuthenticationMiddleware {
      */
     async verifyUser(req, res, next){
         try{
-            let user = await DB.userModel.findByPK(req.userId);
-            if(user.getRoles().include('user')) next();
+            console.log(req.userId);
+            let user = await DB.userModel.findByPk(req.userId);
+            let roles = await user.getRoles();
+            let role = roles.find(value => value.name == 'user')
+            if(role) return next();
             res.status(403).send({
                 message: 'Required User role', 
                 sucess: false});
         }catch(err){
             res.status('403').send({
-                message: 'User not found', 
+                message: err.message, 
                 status: false});
         }
     }

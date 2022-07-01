@@ -5,7 +5,7 @@ const Op = DB.Sequelize.Op;
 const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 const Movies = DB.movieModel;
 class MoviesController {
-    async fetchMovies(req, res){
+    public async fetchMovies(req, res){
         try{
             let data = await movieService.fetchMovies(req.params.page);
             res.status(200).send({
@@ -74,6 +74,9 @@ class MoviesController {
     }
     public async createMovie(req, res){
         try{
+            let image: String;
+            if(req.files != undefined) image = configuration.hostAddr as string + 
+                '/images/' + req.files[0].filename;
             let movie = await Movies.create({
                 userId: req.id,
                 movieStamp: req.body.movieStamp,
@@ -82,7 +85,7 @@ class MoviesController {
                 yearOfRelease: req.body.yearOfRelease,
                 language: req.body.language,
                 movieType: req.body.movieType,
-                featureImage: req.body.featureImage
+                featureImage: image ? image : req.body.featureImage
             });
             res.status(200).send({
                 sucess: true,

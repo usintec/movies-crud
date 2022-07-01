@@ -23,23 +23,24 @@ app.use('/api/user', UserRouter);
 app.use('/api/movies/', MoviesRouter);
 
 // Database syncronization
-DB.sequelize.sync({force: true})
-.then(() => {
-  console.log('done creating db') 
-  DB.roleModel.create({
-    id: 1,
-    name: DB.Roles[0].toString()
-  }).then(()=>console.log('done'))
-  .catch((err) =>{
-    console.log(err);
-    console.log(err.message);
-  });
-  DB.roleModel.create({
-    id: 2,
-    name: DB.Roles[1].toString()
-  });
-})
-.catch((err) => console.log(err) );
+DB.sequelize.sync()
+// DB.sequelize.sync({force: true})
+// .then(() => {
+//   console.log('done creating db') 
+//   DB.roleModel.create({
+//     id: 1,
+//     name: DB.Roles[0].toString()
+//   }).then(()=>console.log('done'))
+//   .catch((err) =>{
+//     console.log(err);
+//     console.log(err.message);
+//   });
+//   DB.roleModel.create({
+//     id: 2,
+//     name: DB.Roles[1].toString()
+//   });
+// })
+// .catch((err) => console.log(err) );
 
 // Default routes
 app.get('/',()=>{

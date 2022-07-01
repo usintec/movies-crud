@@ -26,7 +26,8 @@ class UserController {
             let role = await DB.roleModel.findAll({where: {name: 'user' } }); 
             await user.setRoles(role);
             res.status(200).send({
-                user: user,
+                userId: user.id,
+                userEmail: user.email,
                 token: token,
                 role: role,
                 sucess: true
@@ -56,7 +57,8 @@ class UserController {
             if(!passwordValidity) return res.status(403).send({message: 'Invalid password', success: false});
             let token = jwt.sign({id: user.id}, configuration.secret as string, {expiresIn: 86400});
             res.status(200).send({
-                user: user,
+                userId: user.id,
+                userEmail: user.email,
                 token: token,
                 status: true,
             });
