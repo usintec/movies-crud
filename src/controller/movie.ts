@@ -40,23 +40,23 @@ class MoviesController {
     }
     public async readFavouriteMovie(req, res){
         try{
-            let moviesPerPage = parseInt(req.params.limit) | configuration.moviesPerPage as number;
+            let moviesPerPage = req.params.limit ? parseInt(req.params.limit) : configuration.moviesPerPage as number;
             let offset = moviesPerPage * req.params.page as number;
-            let order: String = req.params.order.toString();
+            let rank = req.params.rank ? req.params.rank : 'createdAt';
+            let order = req.params.order ? req.params.order.toString().toUpperCase() : 'ASC'; //'DESC'
             let movies = await Movies.findAndCountAll({
-                where: { userId: req.id },
-                limit: parseInt(req.params.limit),
+                where: { userId: req.userId },
+                limit: req.params.limit ? parseInt(req.params.limit): 10,
                 offset: offset,
                 order: [
-                    [ order, 'createdAt', 'DESC']
+                    [ rank, order]
                 ]
             });
             let totalPages = (movies['count'] as number) / moviesPerPage;
-            let prevPage = req.params.page as number > 1 ? 
-                req.params.page as number - 1 : 
-                req.params.page as number
-            let nextPage = req.params.page as number < totalPages ?
-                req.params.page as number + 1 :req.params.page as number
+            let prevPage = parseInt(req.params.page) > 1 ? 
+                parseInt(req.params.page) - 1 : 0
+            let nextPage = parseInt(req.params.page) < (totalPages - 1) ?
+                parseInt(req.params.page) + 1 : 0
             res.status(200).send({
                 sucess: true,
                 message: 'fetch all favourite movies for user',
@@ -78,7 +78,7 @@ class MoviesController {
             if(req.files != undefined) image = configuration.hostAddr as string + 
                 '/images/' + req.files[0].filename;
             let movie = await Movies.create({
-                userId: req.id,
+                userId: req.userId,
                 movieStamp: req.body.movieStamp,
                 synopsis: req.body.synopsis,
                 title: req.body.title,

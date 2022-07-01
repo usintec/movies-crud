@@ -16,7 +16,6 @@ class AuthenticationMiddleware {
      * @returns 
      */
     verifyToken(req, res, next){
-        // console.log(req);
         let token = req.headers['authorization'];
         if(!token) return res.status('403').send({
             message: 'No token is provided',
@@ -58,7 +57,6 @@ class AuthenticationMiddleware {
      */
     async verifyUser(req, res, next){
         try{
-            console.log(req.userId);
             let user = await DB.userModel.findByPk(req.userId);
             let roles = await user.getRoles();
             let role = roles.find(value => value.name == 'user')
