@@ -14,6 +14,7 @@ class UserModel {
             email: {
                 type: Sequelize.STRING,
                 isEmail: true,
+                unique: true,
                 allowNull: false
             },
             password: {

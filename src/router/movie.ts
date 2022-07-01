@@ -7,7 +7,7 @@ const MoviesRouter = express.Router();
 /**
  * Add routes to MoviesRouter
  */
-MoviesRouter.get('/:page', moviesController.fetchMovies);
+MoviesRouter.get('/:page', moviesController.fetchMoviesFromThirdParty);
 
 MoviesRouter.get('/favourite/:page/:limit?/:rank?/:order?', [
     authenticationMiddleware.verifyToken, 

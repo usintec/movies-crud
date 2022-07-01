@@ -5,7 +5,7 @@ const Op = DB.Sequelize.Op;
 const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 const Movies = DB.movieModel;
 class MoviesController {
-    public async fetchMovies(req, res){
+    public async fetchMoviesFromThirdParty(req, res){
         try{
             let data = await movieService.fetchMovies(req.params.page);
             res.status(200).send({
