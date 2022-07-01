@@ -24,7 +24,7 @@ class MoviesController {
     public async removeMovieFromFavourite(req, res){
         try{
             let movie = Movies.destroy({
-                where: { id: req.params.id }
+                where: { id: req.params.movieId }
             });
             res.status(200).send({
                 sucess: true,
