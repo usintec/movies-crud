@@ -12,7 +12,8 @@ MoviesRouter.get('/:page', moviesController.fetchMoviesFromThirdParty);
 
 MoviesRouter.get('/favourite/:page/:limit?/:rank?/:order?', [
     authenticationMiddleware.verifyToken, 
-    authenticationMiddleware.verifyUser], 
+    authenticationMiddleware.verifyUser,
+    movieValidationMiddleware.favouriteMovieValidation], 
     moviesController.readFavouriteMovie);
 
 MoviesRouter.get('/search/:keyword', [
@@ -37,7 +38,8 @@ MoviesRouter.put('/update', [
 
 MoviesRouter.delete('/:movieId', [
     authenticationMiddleware.verifyToken, 
-    authenticationMiddleware.verifyUser],
+    authenticationMiddleware.verifyUser,
+    movieValidationMiddleware.movieIdValidation],
     moviesController.removeMovieFromFavourite);
 
 

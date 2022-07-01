@@ -25,7 +25,7 @@ class MovieMode {
             },
             yearOfRelease: {
                 type: Sequelize.STRING,
-                allowNull: true,
+                allowNull: false,
             },
             language: {
                 type: Sequelize.STRING,
