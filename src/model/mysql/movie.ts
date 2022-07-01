@@ -17,7 +17,7 @@ class MovieMode {
             },
             movieStamp: {
                 type: Sequelize.STRING,
-                allowNull: false,
+                allowNull: true,
             },
             title: {
                 type: Sequelize.STRING,

@@ -86,24 +86,6 @@ class MovieService extends HttpClient {
             throw err;
         };
     }
-    
-    public async addMovieToFavourite(): Promise<void>{
-        
-    }
-
-    public async removeMovieFromFavourite(): Promise<void>{
-
-    }
-    public async readFavouriteMovie(): Promise<void>{
-
-    }
-    public async createMovie(): Promise<void>{
-
-    }
-    public async updateMovie(): Promise<void>{
-
-    }
-
 }
 let movieService = new MovieService();
 export { movieService }
