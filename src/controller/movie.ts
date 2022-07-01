@@ -101,24 +101,32 @@ class MoviesController {
     }
     public async updateMovie(req, res){
         try{
+            let image: String;
+            if(req.files != undefined) image = configuration.hostAddr as string + 
+                '/images/' + req.files[0].filename;
             let movie = await Movies.update({
                 synopsis: req.body.synopsis,
                 title: req.body.title,
                 yearOfRelease: req.body.yearOfRelease,
                 language: req.body.language,
                 movieType: req.body.movieType,
-                featureImage: req.body.featureImage
+                featureImage: image ? image : req.body.featureImage
             },{
                 where: {
-                    id: req.body.id,
-                    userId: req.id
+                    id: req.body.movieId,
+                    userId: req.userId
                 }
             });
+            movie[0] == 1 ?
             res.status(200).send({
                 sucess: true,
-                message: 'movie updated sucessfully',
+                message: 'Movie updated sucessfully',
                 movies: movie
-            });
+            }) :
+            res.status(403).send({
+                sucess: false,
+                message: 'Movie not updated'
+            });;
         }catch(err){
             res.status(403).send({
                 sucess: false,

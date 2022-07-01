@@ -28,6 +28,7 @@ MoviesRouter.post('/', [
 MoviesRouter.put('/update', [
     authenticationMiddleware.verifyToken, 
     authenticationMiddleware.verifyUser],
+    [upload.array('files')],
     moviesController.updateMovie);
 
 MoviesRouter.delete('/:movieId', [
