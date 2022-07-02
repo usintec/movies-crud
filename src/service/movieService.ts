@@ -3,8 +3,11 @@ import { HttpClient } from "./httpClient";
 import { MovieInterface } from "./model/movieInterface";
 import { MoviesModel } from "./model/movieModel";
 import { MovieType } from "./model/movieType";
-// get appropriate configuration e.g DEV, STAGING OR PROD
-const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
+import { DB } from "../database/model";
+
+const Op = DB.Sequelize.Op;
+const Movies = DB.movieModel;
+const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;// get appropriate configuration e.g DEV, STAGING OR PROD
 /**
  * Create MovieService
  */
@@ -86,6 +89,155 @@ class MovieService extends HttpClient {
             throw err;
         };
     }
+
+    public async deleteMovie(movieId: string){
+        try{
+            let movie = await Movies.destroy({
+                where: { id: movieId }
+            });
+            return movie;
+        }catch(err){
+            throw err;
+        }
+    }
+
+    public async readMovie(page: number, limit: number = 10,
+        rank: string = 'createdAt', order: string = 'ASC', userId: String){
+        try{
+            let moviesPerPage = limit ? limit : configuration.moviesPerPage as number;
+            let offset = moviesPerPage * page;
+            let movies = await Movies.findAndCountAll({
+                where: { userId: userId },
+                limit: limit,
+                offset: offset,
+                order: [
+                    [ rank, order]
+                ]
+            });
+            let totalPages = Math.ceil((movies['count'] as number) / moviesPerPage);
+            let prevPage = page >= 1 ? page - 1 : 0
+            let nextPage = page < (totalPages - 1) ? page + 1 : 0
+            return {movies: movies, nextPage: nextPage, prevPage: prevPage, totalPages: totalPages};
+        }catch(err){
+            throw err;
+        }
+    }
+
+    public async createMovie(synopsis: string, movieStamp: string,
+        title: string, yearOfRelease: string, language: string,
+        movieType: string, featureImage: string, userId: string, files: any){
+        try{
+            let error: Array<String> = [];
+            if(!title) error.push('title can not be empty');
+            if(!yearOfRelease) error.push('year of release can not be empty');
+            if(!movieType) error.push('movie type can not be empty');
+
+            if(typeof title !== 'string' ||
+                title.trim() === '' ||
+                !Number.isNaN(Number(title)))
+                    error.push('title can not be a number');
+
+            if(!(typeof yearOfRelease !== 'string' ||
+                yearOfRelease.trim() === '' ||
+                !Number.isNaN(Number(yearOfRelease))))
+                    error.push('year of release should be a number');
+
+            if(!(typeof movieType !== 'string' ||
+                movieType.trim() === '' ||
+                !Number.isNaN(Number(movieType))))
+                    error.push('movie type should be a number');
+
+            if(movieType.length > 1)
+                error.push('movie type should be one digit');
+            
+            if(parseInt(movieType) > 2)
+                error.push("movie type can only be '0' for movies or '1' for series or '2' for music");
+
+            if (error.length > 0) 
+                throw 'validation error';
+
+            let image: String;
+            if(files != undefined) image = configuration.hostAddr as string + 
+                '/images/' + files[0].filename;
+            let movie = await Movies.create({
+                userId: userId,
+                movieStamp: movieStamp,
+                synopsis: synopsis,
+                title: title,
+                yearOfRelease: yearOfRelease,
+                language: language,
+                movieType: movieType,
+                featureImage: image ? image : featureImage
+            });
+            return movie;
+        }catch(err){
+            throw err;
+        }
+    }
+
+    public async addToFavourite(synopsis: string, movieStamp: string,
+        title: string, yearOfRelease: string, language: string,
+        movieType: string, featureImage: string, userId: string, files: any){
+        try{
+            let image: String;
+            if(files != undefined) image = configuration.hostAddr as string + 
+                '/images/' + files[0].filename;
+            let movie = await Movies.create({
+                userId: userId,
+                movieStamp: movieStamp,
+                synopsis: synopsis,
+                title: title,
+                yearOfRelease: yearOfRelease,
+                language: language,
+                movieType: movieType,
+                featureImage: image ? image : featureImage
+            });
+            return movie;
+        }catch(err){
+            throw err;
+        }
+    }
+
+    public async updateMovie(synopsis: string, movieStamp: string,
+        title: string, yearOfRelease: string, language: string,
+        movieType: string, featureImage: string, userId: string, files: any,
+        movieId: string){
+        try{
+            let image: String;
+            if(files != undefined) image = configuration.hostAddr as string + 
+                '/images/' + files[0].filename;
+            let movie = await Movies.update({
+                synopsis: synopsis,
+                title: title,
+                yearOfRelease: yearOfRelease,
+                language: language,
+                movieType: movieType,
+                featureImage: image ? image : featureImage
+            },{
+                where: { id: movieId, userId: userId } });
+            if(movie[0] == 1) return movie;
+            throw 'Movie not updated';
+            
+        }catch(err){
+            throw err;
+        }
+    }
+
+    public async search(keyword){
+        try{
+            let movie = await Movies.findAndCountAll({
+                where: {
+                    [Op.or]: [
+                        { title: {[Op.eq]: keyword} },              
+                        { language: {[Op.eq]: keyword} },           
+                    ]
+                }
+            });
+            return movie;
+        }catch(err){
+            throw err;
+        }
+    }
 }
-let movieService = new MovieService();
+const movieService = new MovieService();
 export { movieService }

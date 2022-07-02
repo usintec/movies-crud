@@ -1,9 +1,5 @@
-import { EnviromentSetup } from "../configuration/env";
 import { movieService } from "../service/movieService";
-import { DB } from "../database/model";
-const Op = DB.Sequelize.Op;
-const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
-const Movies = DB.movieModel;
+
 class MoviesController {
     
     public async fetchMoviesFromThirdParty(req, res){
@@ -24,9 +20,7 @@ class MoviesController {
 
     public async removeMovieFromFavourite(req, res){
         try{
-            let movie = Movies.destroy({
-                where: { id: req.params.movieId }
-            });
+            let movie = await movieService.deleteMovie(req.params.movieId)
             res.status(200).send({
                 sucess: true,
                 message: 'Movie removed from database',
@@ -41,30 +35,16 @@ class MoviesController {
     }
     public async readFavouriteMovie(req, res){
         try{
-            let moviesPerPage = req.params.limit ? parseInt(req.params.limit) : configuration.moviesPerPage as number;
-            let offset = moviesPerPage * req.params.page as number;
-            let rank = req.params.rank ? req.params.rank : 'createdAt';
-            let order = req.params.order ? req.params.order.toString().toUpperCase() : 'ASC'; //'DESC'
-            let movies = await Movies.findAndCountAll({
-                where: { userId: req.userId },
-                limit: req.params.limit ? parseInt(req.params.limit): 10,
-                offset: offset,
-                order: [
-                    [ rank, order]
-                ]
-            });
-            let totalPages = Math.ceil((movies['count'] as number) / moviesPerPage);
-            let prevPage = parseInt(req.params.page) >= 1 ? 
-                parseInt(req.params.page) - 1 : 0
-            let nextPage = parseInt(req.params.page) < (totalPages - 1) ?
-                parseInt(req.params.page) + 1 : 0
+            let data = await movieService.readMovie(req.params.page as number,
+                    req.params.limit as number, req.params.rank,
+                    req.params.order, req.userId);
             res.status(200).send({
                 sucess: true,
                 message: 'fetch all favourite movies for user',
-                movies: movies,
-                nextPage: nextPage,
-                prevPage: prevPage,
-                totalPages: totalPages
+                movies: data.movies,
+                nextPage: data.nextPage,
+                prevPage: data.prevPage,
+                totalPages: data.totalPages
             });
         }catch(err){
             res.status(403).send({
@@ -75,56 +55,16 @@ class MoviesController {
     }
     public async createMovie(req, res){
         try{
-            let error: Array<String> = [];
-            if(!req.body.title) error.push('title can not be empty');
-            if(!req.body.yearOfRelease) error.push('year of release can not be empty');
-            if(!req.body.movieType) error.push('movie type can not be empty');
-
-            if(typeof req.body.title !== 'string' ||
-                req.body.title.trim() === '' ||
-                !Number.isNaN(Number(req.body.title)))
-                    error.push('title can not be a number');
-
-            if(!(typeof req.body.yearOfRelease !== 'string' ||
-                req.body.yearOfRelease.trim() === '' ||
-                !Number.isNaN(Number(req.body.yearOfRelease))))
-                    error.push('year of release should be a number');
-
-            if(!(typeof req.body.movieType !== 'string' ||
-                req.body.movieType.trim() === '' ||
-                !Number.isNaN(Number(req.body.movieType))))
-                    error.push('movie type should be a number');
-
-            if(req.body.movieType.length > 1)
-                error.push('movie type should be one digit');
-            
-            if(parseInt(req.body.movieType) > 2)
-                error.push("movie type can only be '0' for movies or '1' for series or '2' for music");
-
-            if (error.length > 0) 
-                return  res.status(403).send({
-                    sucess: false,
-                    message: 'validation error',
-                    error: error
-                });
-
-            let image: String;
-            if(req.files != undefined) image = configuration.hostAddr as string + 
-                '/images/' + req.files[0].filename;
-            let movie = await Movies.create({
-                userId: req.userId,
-                movieStamp: req.body.movieStamp,
-                synopsis: req.body.synopsis,
-                title: req.body.title,
-                yearOfRelease: req.body.yearOfRelease,
-                language: req.body.language,
-                movieType: req.body.movieType,
-                featureImage: image ? image : req.body.featureImage
-            });
+            let data = movieService.createMovie(
+                req.body.synopsis, req.body.movieStamp,
+                req.body.title, req.body.yearOfRelease,
+                req.body.language, req.body.movieType,
+                req.body.featureImage, req.userId,
+                req.files);
             res.status(200).send({
                 sucess: true,
                 message: 'Movie created sucessfully',
-                movies: movie
+                movies: data
             });
         }catch(err){
             res.status(403).send({
@@ -135,23 +75,17 @@ class MoviesController {
     }
     public async addMovieToFavourite(req, res){
         try{
-            let image: String;
-            if(req.files != undefined) image = configuration.hostAddr as string + 
-                '/images/' + req.files[0].filename;
-            let movie = await Movies.create({
-                userId: req.userId,
-                movieStamp: req.body.movieStamp,
-                synopsis: req.body.synopsis,
-                title: req.body.title,
-                yearOfRelease: req.body.yearOfRelease,
-                language: req.body.language,
-                movieType: req.body.movieType,
-                featureImage: image ? image : req.body.featureImage
-            });
+            let data = await movieService.addToFavourite(
+                req.body.synopsis, req.body.movieStamp,
+                req.body.title, req.body.yearOfRelease,
+                req.body.language, req.body.movieType,
+                req.body.featureImage, req.userId,
+                req.files
+            );
             res.status(200).send({
                 sucess: true,
                 message: 'Movie created sucessfully',
-                movies: movie
+                movies: data
             });
         }catch(err){
             res.status(403).send({
@@ -162,32 +96,18 @@ class MoviesController {
     }
     public async updateMovie(req, res){
         try{
-            let image: String;
-            if(req.files != undefined) image = configuration.hostAddr as string + 
-                '/images/' + req.files[0].filename;
-            let movie = await Movies.update({
-                synopsis: req.body.synopsis,
-                title: req.body.title,
-                yearOfRelease: req.body.yearOfRelease,
-                language: req.body.language,
-                movieType: req.body.movieType,
-                featureImage: image ? image : req.body.featureImage
-            },{
-                where: {
-                    id: req.body.movieId,
-                    userId: req.userId
-                }
-            });
-            movie[0] == 1 ?
+            let data = movieService.updateMovie(
+                req.body.synopsis, req.body.movieStamp,
+                req.body.title, req.body.yearOfRelease,
+                req.body.language, req.body.movieType,
+                req.body.featureImage, req.userId,
+                req.files, req.body.movieId
+            );
             res.status(200).send({
                 sucess: true,
                 message: 'Movie updated sucessfully',
-                movies: movie
-            }) :
-            res.status(403).send({
-                sucess: false,
-                message: 'Movie not updated'
-            });;
+                movies: data
+            });
         }catch(err){
             res.status(403).send({
                 sucess: false,
@@ -197,14 +117,7 @@ class MoviesController {
     }
     public async search(req, res){
         try{
-            let movies = await Movies.findAndCountAll({
-                where: {
-                    [Op.or]: [
-                        { title: {[Op.eq]: req.params.keyword} },              
-                        { language: {[Op.eq]: req.params.keyword} },           
-                    ]
-                }
-            });
+            let movies = await movieService.search(req.params.keyword);
             res.status(200).send({
                 sucess: true,
                 message: 'movies fetched',
@@ -218,5 +131,5 @@ class MoviesController {
         }
     }
 }
-let moviesController = new MoviesController();
+const moviesController = new MoviesController();
 export { moviesController }
