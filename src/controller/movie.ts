@@ -5,6 +5,7 @@ const Op = DB.Sequelize.Op;
 const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 const Movies = DB.movieModel;
 class MoviesController {
+    
     public async fetchMoviesFromThirdParty(req, res){
         try{
             let data = await movieService.fetchMovies(req.params.page);
@@ -73,6 +74,66 @@ class MoviesController {
         }
     }
     public async createMovie(req, res){
+        try{
+            let error: Array<String> = [];
+            if(!req.body.title) error.push('title can not be empty');
+            if(!req.body.yearOfRelease) error.push('year of release can not be empty');
+            if(!req.body.movieType) error.push('movie type can not be empty');
+
+            if(typeof req.body.title !== 'string' ||
+                req.body.title.trim() === '' ||
+                !Number.isNaN(Number(req.body.title)))
+                    error.push('title can not be a number');
+
+            if(!(typeof req.body.yearOfRelease !== 'string' ||
+                req.body.yearOfRelease.trim() === '' ||
+                !Number.isNaN(Number(req.body.yearOfRelease))))
+                    error.push('year of release should be a number');
+
+            if(!(typeof req.body.movieType !== 'string' ||
+                req.body.movieType.trim() === '' ||
+                !Number.isNaN(Number(req.body.movieType))))
+                    error.push('movie type should be a number');
+
+            if(req.body.movieType.length > 1)
+                error.push('movie type should be one digit');
+            
+            if(parseInt(req.body.movieType) > 2)
+                error.push("movie type can only be '0' for movies or '1' for series or '2' for music");
+
+            if (error.length > 0) 
+                return  res.status(403).send({
+                    sucess: false,
+                    message: 'validation error',
+                    error: error
+                });
+
+            let image: String;
+            if(req.files != undefined) image = configuration.hostAddr as string + 
+                '/images/' + req.files[0].filename;
+            let movie = await Movies.create({
+                userId: req.userId,
+                movieStamp: req.body.movieStamp,
+                synopsis: req.body.synopsis,
+                title: req.body.title,
+                yearOfRelease: req.body.yearOfRelease,
+                language: req.body.language,
+                movieType: req.body.movieType,
+                featureImage: image ? image : req.body.featureImage
+            });
+            res.status(200).send({
+                sucess: true,
+                message: 'Movie created sucessfully',
+                movies: movie
+            });
+        }catch(err){
+            res.status(403).send({
+                sucess: false,
+                message: err.message
+            });
+        }
+    }
+    public async addMovieToFavourite(req, res){
         try{
             let image: String;
             if(req.files != undefined) image = configuration.hostAddr as string + 

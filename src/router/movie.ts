@@ -24,10 +24,16 @@ MoviesRouter.get('/search/:keyword', [
 
 MoviesRouter.post('/', [
     authenticationMiddleware.verifyToken, 
-    authenticationMiddleware.verifyUser,
-    movieValidationMiddleware.moviesValidation],
+    authenticationMiddleware.verifyUser],
     [upload.array('files')],
     moviesController.createMovie);
+
+    MoviesRouter.post('/add', [
+    authenticationMiddleware.verifyToken, 
+    authenticationMiddleware.verifyUser,
+    movieValidationMiddleware.movieIdValidation],
+    [upload.array('files')],
+    moviesController.addMovieToFavourite);
 
 MoviesRouter.put('/update', [
     authenticationMiddleware.verifyToken, 
