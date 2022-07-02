@@ -31,7 +31,7 @@ MoviesRouter.post('/', [
     MoviesRouter.post('/add', [
     authenticationMiddleware.verifyToken, 
     authenticationMiddleware.verifyUser,
-    movieValidationMiddleware.movieIdValidation],
+    movieValidationMiddleware.moviesValidation],
     [upload.array('files')],
     moviesController.addMovieToFavourite);
 

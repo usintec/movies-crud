@@ -53,8 +53,8 @@ class MoviesController {
                     [ rank, order]
                 ]
             });
-            let totalPages = (movies['count'] as number) / moviesPerPage;
-            let prevPage = parseInt(req.params.page) > 1 ? 
+            let totalPages = Math.ceil((movies['count'] as number) / moviesPerPage);
+            let prevPage = parseInt(req.params.page) >= 1 ? 
                 parseInt(req.params.page) - 1 : 0
             let nextPage = parseInt(req.params.page) < (totalPages - 1) ?
                 parseInt(req.params.page) + 1 : 0
