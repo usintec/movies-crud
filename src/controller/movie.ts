@@ -1,6 +1,6 @@
 import { EnviromentSetup } from "../configuration/env";
 import { movieService } from "../service/movieService";
-import { DB } from "../model/mysql";
+import { DB } from "../database/model";
 const Op = DB.Sequelize.Op;
 const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 const Movies = DB.movieModel;

@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
 import { EnviromentSetup } from '../configuration/env';
-import { DB } from '../model/mysql';
+import { DB } from '../database/model';
 // get appropriate configurations e.g DEV, STAGING OR PROD
 const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 /**

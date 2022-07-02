@@ -1,4 +1,4 @@
-import { DB } from "../model/mysql";
+import { DB } from "../database/model";
 import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { EnviromentSetup } from "../configuration/env";

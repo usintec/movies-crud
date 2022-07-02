@@ -1,4 +1,4 @@
-import { DB } from "../model/mysql";
+import { DB } from "../database/model";
 
 class UserValidationMiddleware {
     isEmail(req, res, next){
