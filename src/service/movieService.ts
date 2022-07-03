@@ -53,6 +53,7 @@ class MovieService extends HttpClient {
         let pageNo: Number;
         if(this._moviesCollection.length > 1) pageNo = this._moviesCollection.shift().pageNo;
         if(pageNo) delete this._activeMoviesInBuffer[pageNo.toString()]
+        return this._moviesCollection.length;
     }
     /**
      * Third party integration

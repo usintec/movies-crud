@@ -18,14 +18,14 @@
     Therd is no limit attach to the usage of the apis.
 
 ## Documentation
-    (https://documenter.getpostman.com/view/5921529/UzJEUKnN)
+    https://documenter.getpostman.com/view/5921529/UzJEUKnN
 
 ## URL
-    (https://movies.codetechweb.xyz/)
+    https://movies.codetechweb.xyz/
 
 ## Application Setup Stpes
     1. Clone the repository
-        (https://github.com/usintec/movies-crud.git)
+        https://github.com/usintec/movies-crud.git
 
     2. Run "npm install" to install all dependencies.
 
@@ -41,4 +41,7 @@
 
     7. Test with app with "npm run test". Note: use ENVIROMENT=TEST in the env file.
 
-    
+## TEST 
+    I am still writing more test for more code coverage
+     
+    (images/test.png)
