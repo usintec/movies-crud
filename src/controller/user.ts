@@ -1,10 +1,4 @@
-import { DB } from "../database/model";
-import bcrypt from 'bcryptjs';
-import * as jwt from 'jsonwebtoken';
-import { EnviromentSetup } from "../configuration/env";
 import { userService } from "../service/userService";
-// get appropriate configuration e.g DEV, STAGING OR PROD
-const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 /**
  * Create UserController
  */

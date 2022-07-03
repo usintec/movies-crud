@@ -16,8 +16,8 @@ class ProductionServer extends BaseConfig{
             process.env.PROD_SECRET,
             Number.parseInt(process.env.PROD_TOTAL_PAGE_BUFFER),
             process.env.PROD_MOVIES_DB_URL,
-            Number.parseInt(process.env.PROD_MOVIES_PER_PAGE)
-        ))
+            Number.parseInt(process.env.PROD_MOVIES_PER_PAGE),
+            process.env.TEST_DB))
     }
 }
 export { ProductionServer }
