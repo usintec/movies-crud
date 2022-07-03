@@ -13,7 +13,6 @@ class Config{
     private _totalPageBuffer: Number;
     private _moviesDbURL: String;
     private _moviesPerPage: Number;
-    private _testDb: String;
     /**
      * 
      * @param hostAddr server host address
@@ -27,11 +26,10 @@ class Config{
      * @param totalPageBuffer max page(buffer) to hold movies from thirdParty movies db
      * @param moviesDbURL third party integration (movies database url)
      * @param moviesPerPage number of movies on a single page
-     * @param testDb testing database
      */
     constructor(hostAddr: String, portNo: Number, dbName: String, dbHostAddr: String, 
         dbUser: String, dbPassword: String, dbPortNo: Number, secret: String, 
-        totalPageBuffer: Number, moviesDbURL: String, moviesPerPage: Number, testDb: String){
+        totalPageBuffer: Number, moviesDbURL: String, moviesPerPage: Number){
             this._hostAddr = hostAddr;
             this._portNo = portNo;
             this._dbName = dbName;
@@ -43,7 +41,6 @@ class Config{
             this._totalPageBuffer = totalPageBuffer;
             this._moviesDbURL = moviesDbURL;
             this._moviesPerPage = moviesPerPage;
-            this._testDb = testDb;
     }
     // return host address
     public get hostAddr(): String{
@@ -88,10 +85,6 @@ class Config{
     //return movies per page
     public get moviesPerPage(): Number{
         return this._moviesPerPage;
-    }
-    // return testing database
-    public get testDb(): String{
-        return this._testDb;
     }
 }
 export { Config };

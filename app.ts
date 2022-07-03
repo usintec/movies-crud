@@ -23,9 +23,9 @@ class App {
     start(){
         // Start the server
         try{
-            new DatabaseSync().sync();
-            new RegisterRoutes(this._app);
-            this._app.listen(port, () => {
+            new DatabaseSync().sync(false); // pass true to delete and re-create the db
+            new RegisterRoutes(this._app); // register all routes with the application
+            this._app.listen(port, () => { //start the application
             console.log(`Server running on http://localhost:${port}`)
             });
         }catch(err){

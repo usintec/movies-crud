@@ -16,8 +16,7 @@ class StagingServer extends BaseConfig{
             process.env.STAGING_SECRET,
             Number.parseInt(process.env.STAGING_TOTAL_PAGE_BUFFER),
             process.env.STAGING_MOVIES_DB_URL,
-            Number.parseInt(process.env.STAGING_MOVIES_PER_PAGE),
-            process.env.TEST_DB))
+            Number.parseInt(process.env.STAGING_MOVIES_PER_PAGE)))
     }
 }
 export { StagingServer }

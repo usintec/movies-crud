@@ -1,6 +1,7 @@
 import { DevelopmentServer } from "./devServer";
 import { ProductionServer } from "./prodServer";
 import { StagingServer } from "./stagServer";
+import { TestServer } from "./testServer";
 
 class EnviromentSetup {
     private _envName: String;
@@ -17,6 +18,9 @@ class EnviromentSetup {
                 break;
             case 'PROD':
                 return new ProductionServer().Config;
+                break;
+            case 'TEST':
+                return new TestServer().Config;
                 break;
         }
         return null;
