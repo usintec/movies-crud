@@ -6,7 +6,7 @@
     You can as well perform crud operation on you favourite movies.
 
 ## Overview
-    user needs to either create account or sign in to use all api under the movies route.
+    User needs to either create account or sign in to use all api under the movies route.
 
 ## Authentication
     Valid token is issued after registration or sing in to be used for subsequent authorisation.
@@ -18,14 +18,14 @@
     Therd is no limit attach to the usage of the apis.
 
 ## Documentation
-    https://documenter.getpostman.com/view/5921529/UzJEUKnN
+    (https://documenter.getpostman.com/view/5921529/UzJEUKnN)
 
-## Host Link
-    https://movies.codetechweb.xyz/
+## URL
+    (https://movies.codetechweb.xyz/)
 
 ## Application Setup Stpes
     1. Clone the repository
-        https://github.com/usintec/movies-crud.git
+        (https://github.com/usintec/movies-crud.git)
 
     2. Run "npm install" to install all dependencies.
 
