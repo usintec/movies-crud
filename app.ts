@@ -29,7 +29,7 @@ class App {
             console.log(`Server running on http://localhost:${port}`)
             });
         }catch(err){
-            console.log(`Error occurred: ${err.message}`)
+            // console.log(`Error occurred: ${err.message}`)
         }
     }
 }
