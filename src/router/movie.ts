@@ -28,7 +28,7 @@ MoviesRouter.post('/', [
     [upload.array('files')],
     moviesController.createMovie);
 
-    MoviesRouter.post('/add', [
+MoviesRouter.post('/add', [
     authenticationMiddleware.verifyToken, 
     authenticationMiddleware.verifyUser,
     movieValidationMiddleware.moviesValidation],
