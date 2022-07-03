@@ -24,7 +24,7 @@ class UserController {
         }
     }
     /**
-     * Sing in an existing user
+     * Sign in an existing user
      * @param req request
      * @param res response
      * @returns null
