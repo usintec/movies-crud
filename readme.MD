@@ -44,4 +44,4 @@
 ## TEST 
     I am still writing more test for more code coverage
      
-    (images/test.png)
+    (./images/test.png)
