@@ -2,6 +2,7 @@ import { DB } from "../database/model";
 import bcrypt from 'bcryptjs';
 import * as jwt from 'jsonwebtoken';
 import { EnviromentSetup } from "../configuration/env";
+import { userService } from "../service/userService";
 // get appropriate configuration e.g DEV, STAGING OR PROD
 const configuration = new EnviromentSetup(process.env.ENVIROMENT).enviroment;
 /**
@@ -15,23 +16,13 @@ class UserController {
      */
     async signUpUser(req, res){
         try{
-            let user = await DB.userModel.create({
-                email: req.body.email.toString(),
-                password: bcrypt.hashSync(req.body.password)
-            });
-            
-            const token = jwt.sign({id: user.id}, configuration.secret as string,{
-                expiresIn: 86400
-            });
-            let role = await DB.roleModel.findAll({where: {name: 'user' } }); 
-            await user.setRoles(role);
+            let data = await userService.register(req.body.email, req.body.password);
             res.status(200).send({
-                userId: user.id,
-                userEmail: user.email,
-                token: token,
-                role: role,
-                sucess: true
-            });
+                userId: data.userId,
+                userEmail: data.userEmail,
+                token: data.token,
+                role: data.role,
+                sucess: true});
         }catch(err){
             res.status(403).send({
                 message: err.message, 
@@ -46,20 +37,11 @@ class UserController {
      */
     async singIn(req, res){
         try {
-            let user = await DB.userModel.findOne({
-                where: { email: req.body.email as string }
-            });
-            if(!user) return res.status(403).send({
-                message: 'User not found',
-                sucess: false
-            })
-            let passwordValidity = bcrypt.compareSync(req.body.password, user.password);
-            if(!passwordValidity) return res.status(403).send({message: 'Invalid password', success: false});
-            let token = jwt.sign({id: user.id}, configuration.secret as string, {expiresIn: 86400});
+            let data = await userService.login(req.body.email, req.body.password);
             res.status(200).send({
-                userId: user.id,
-                userEmail: user.email,
-                token: token,
+                userId: data.userId,
+                userEmail: data.userEmail,
+                token: data.token,
                 status: true,
             });
         }catch(err){

@@ -102,7 +102,7 @@ class MovieService extends HttpClient {
     }
 
     public async readMovie(page: number, limit: number = 10,
-        rank: string = 'createdAt', order: string = 'ASC', userId: String){
+        rank: string = 'createdAt', order: string = 'ASC', userId: number){
         try{
             let moviesPerPage = limit ? limit : configuration.moviesPerPage as number;
             let offset = moviesPerPage * page;

@@ -36,8 +36,8 @@ class MoviesController {
     public async readFavouriteMovie(req, res){
         try{
             let data = await movieService.readMovie(req.params.page as number,
-                    req.params.limit as number, req.params.rank,
-                    req.params.order, req.userId);
+                    parseInt(req.params.limit), req.params.rank,
+                    req.params.order, req.userId as number);
             res.status(200).send({
                 sucess: true,
                 message: 'fetch all favourite movies for user',
