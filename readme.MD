@@ -23,7 +23,7 @@
 ## URL
     https://movies.codetechweb.xyz/
 
-## Application Setup Stpes
+## Application Setup Steps
     1. Clone the repository
         https://github.com/usintec/movies-crud.git
 
@@ -44,4 +44,4 @@
 ## TEST 
     I am still writing more test for more code coverage
      
-    ![test](images/test.png)
+    
