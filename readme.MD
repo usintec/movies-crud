@@ -1,7 +1,9 @@
 # Movies CRUD
 
 ## Introduction
-    Browse or list pages of movies and add movies to your favourite list. The Api gives you access to search, rank and order movies based on your choice. you can as well perform crud operation on you favourite movies.
+    Browse or list pages of movies and add movies to your favourite list. 
+    The Api gives you access to search, rank and order movies based on your choice. 
+    You can as well perform crud operation on you favourite movies.
 
 ## Overview
     user needs to either create account or sign in to use all api under the movies route.
